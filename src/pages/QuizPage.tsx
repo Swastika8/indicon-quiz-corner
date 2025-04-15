@@ -44,6 +44,12 @@ const QuizPage = () => {
     setQuizCompleted(false);
   };
   
+  const handleUpdateScore = (isCorrect: boolean) => {
+    if (isCorrect) {
+      setScore(prev => prev + 1);
+    }
+  };
+  
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-white to-gray-100">
       <Header />
@@ -84,15 +90,8 @@ const QuizPage = () => {
               question={quiz.questions[currentQuestionIndex].text}
               options={quiz.questions[currentQuestionIndex].options}
               explanation={quiz.questions[currentQuestionIndex].explanation}
-              onNext={() => {
-                const isCorrect = quiz.questions[currentQuestionIndex].options.find(
-                  option => option.isCorrect
-                )?.isCorrect;
-                
-                if (isCorrect) {
-                  setScore(prev => prev + 1);
-                }
-                
+              onNext={(isCorrect) => {
+                handleUpdateScore(isCorrect);
                 handleNextQuestion();
               }}
             />

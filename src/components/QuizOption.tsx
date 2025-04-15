@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { Check } from 'lucide-react';
+import { Check, X } from 'lucide-react';
 
 interface QuizOptionProps {
   id: string;
@@ -22,15 +22,15 @@ const QuizOption: React.FC<QuizOptionProps> = ({
 }) => {
   const getStatusClasses = () => {
     if (!isRevealed) {
-      return isSelected ? 'selected' : '';
+      return isSelected ? 'border-indicon-navy bg-indicon-navy/10' : 'hover:bg-gray-50';
     }
     
     if (isCorrect) {
-      return 'correct';
+      return 'border-green-500 bg-green-50';
     }
     
     if (isSelected && !isCorrect) {
-      return 'incorrect';
+      return 'border-red-500 bg-red-50';
     }
     
     return '';
@@ -39,7 +39,7 @@ const QuizOption: React.FC<QuizOptionProps> = ({
   return (
     <div
       className={cn(
-        'quiz-option flex items-center',
+        'quiz-option flex items-center p-3 border rounded-lg transition-colors cursor-pointer',
         getStatusClasses()
       )}
       onClick={!isRevealed ? onSelect : undefined}
@@ -50,6 +50,9 @@ const QuizOption: React.FC<QuizOptionProps> = ({
         )}
         {isRevealed && isCorrect && (
           <Check className="w-4 h-4 text-green-500" />
+        )}
+        {isRevealed && isSelected && !isCorrect && (
+          <X className="w-4 h-4 text-red-500" />
         )}
       </div>
       <div className="flex-grow">

@@ -16,7 +16,7 @@ interface QuizQuestionProps {
   question: string;
   options: Option[];
   explanation: string;
-  onNext: () => void;
+  onNext: (isCorrect: boolean) => void;
 }
 
 const QuizQuestion: React.FC<QuizQuestionProps> = ({
@@ -41,9 +41,10 @@ const QuizQuestion: React.FC<QuizQuestionProps> = ({
   };
 
   const handleNext = () => {
+    const isCorrect = isAnswerCorrect();
+    onNext(isCorrect);
     setSelectedOptionId(null);
     setIsRevealed(false);
-    onNext();
   };
 
   const isAnswerCorrect = () => {
